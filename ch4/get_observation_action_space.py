@@ -15,6 +15,8 @@ def print_spaces(space):
     
 if __name__ == "__main__":
     env = gym.make(sys.argv[1])
+    obs = env.reset()
+    print('obs sample: ', obs.shape, type(obs), obs)
     print("Observation Space:")
     print_spaces(env.observation_space)
     print("Action Space:")
