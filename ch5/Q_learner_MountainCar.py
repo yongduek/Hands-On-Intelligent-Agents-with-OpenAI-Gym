@@ -68,8 +68,11 @@ def train(agent, env):
             total_reward += reward
         if total_reward > best_reward:
             best_reward = total_reward
-        print("Episode#:{} reward:{} best_reward:{} eps:{}".format(episode,
+        
+        if episode%100 == 0:
+            print("Episode#:{} reward:{} best_reward:{} eps:{}".format(episode,
                                      total_reward, best_reward, agent.epsilon))
+    #
     # Return the trained policy
     return np.argmax(agent.Q, axis=2)
 
@@ -90,6 +93,10 @@ if __name__ == "__main__":
     env = gym.make('MountainCar-v0')
     agent = Q_Learner(env)
     learned_policy = train(agent, env)
+
+    with open('learned_policy.npy', 'wb') as f:
+        np.save(f, learned_policy)
+
     # Use the Gym Monitor wrapper to evalaute the agent and record video
     gym_monitor_path = "./gym_monitor_output"
     env = gym.wrappers.Monitor(env, gym_monitor_path, force=True)

@@ -6,3 +6,4 @@
 #Python intermediate files
 __pycache__
 *.pyc
+ch5/gym_monitor_output/*
