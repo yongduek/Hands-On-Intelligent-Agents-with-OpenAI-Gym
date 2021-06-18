@@ -63,6 +63,8 @@ class Deep_Q_Learner(object):
         :param action_shape: Shape (number) of the discrete action space
         :param params: A dictionary containing various Agent configuration parameters and hyper-parameters
         """
+        print('Deep_Q_Learner: device=', device)
+        
         self.state_shape = state_shape
         self.action_shape = action_shape
         self.params = params
@@ -155,7 +157,7 @@ class Deep_Q_Learner(object):
                 self.Q(next_obs_batch).detach().max(1)[0].data.cpu().numpy()
 
         td_target = torch.from_numpy(td_target).to(device)
-        action_idx = torch.from_numpy(action_batch).to(device)
+        action_idx = torch.from_numpy(action_batch).long().to(device)
         td_error = torch.nn.functional.mse_loss( self.Q(obs_batch).gather(1, action_idx.view(-1, 1)),
                                                        td_target.float().unsqueeze(1))
 
